@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Home </title>
+<style>
+
+div.container {
+    width: 100%;
+    border: 1px;
+
+    background-color: #e8ebed;
+}
+
+header, footer {
+    padding: 1em;
+    color: white;
+    background-color: #060c26;
+    clear: left;
+    text-align: center;
+}
+
+nav {
+    background-color: white;
+    float: left;
+    max-width: 200px;
+    height: 100%;
+    margin: 0;
+    padding-right: 40px;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul a {
+    text-decoration: none;
+}
+
+article {
+    background-color: white;
+    margin-left: 250px;
+    margin-right: 200px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-left: 1px solid white;
+    border-radius: 5px;
+    padding: 1em;
+    overflow: hidden;
+}
+
+
+.button {
+    background-color: #ffcc00;
+    border-radius: 8px;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 35px 20px;
+    cursor: pointer;
+    font: 13px Verdana;
+}
+
+.input {
+    background-color: #fcfcfc;
+    border: none;
+    color: black;
+    padding: 5px 20px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 5px 15px;
+    cursor: pointer;
+    font: 13px Verdana;}
+
+</style>
+</head>
+
+<body>
+<div class="container">
+<header>
+<form action="/post" method="POST">
+   <h1>Hey {{username}}!</h1>
+</form>
+</header>
+
+<nav>
+<ul>
+<form action="/create" method="POST">
+   <div style="font-family: Helvetica; font-size:14px; color:#3c3c3d"> <p><center><b>Create a new friend group</b></center></p> </div>
+    <input type="text" class="input" name ="group_name" placeholder="name your group" required/> </br>
+    <input type="text" class="input" name = "description" placeholder="description" required/> </br>
+    <input type="text" class="input" name ="friend" placeholder="add a friend!" required/> </br>
+
+    <div style="text-align:center">
+    <input type="submit" class="button" style="border:none;" value="Submit" />
+    {% if error %}
+        <p class="error"><strong></strong> {{error}}</p>
+    {% endif %}
+    </div>
+
+    </form>
+
+
+<form action="/addFriend" method="POST">
+    <div style="text-align:center;">
+    <div style="font-family: Helvetica; font-size:14px; color:#3c3c3d"> <p><center><b>Add friends to a friend group</b></center></p> </div>
+    <input type="submit" class="button" style="border:none;" value="Add a friend" />
+    </div>
+</form>
+
+</nav>
+</ul>
+
+<article>
+<center>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul>
+      {% for message in messages %}
+        <div style="font: Helvetica; color: red; font-size:16px"><p><b>{{message}}</b></p></div>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+
+<form action="/post" method="POST">
+  <div style="font-family: Helvetica; font-size:14px; color:#3c3c3d"> <p><center><b>Make a new post!</b></center></p> </div>
+	<input type="text" class="input" name = "Content" placeholder="post" required/> </br>
+	<input type="text" class="input" name = "file_path" placeholder="add a link (optional)" /> </br>
+	<input type="text" class="input" name = "group_name" placeholder="friend group" required/> </br>
+    <select class="input" name="public" style="color:grey">
+        <option value="public" required>public</option>
+        <option value="private" required>private </option>
+    </select>
+    <br><br>
+	<div style="text-align:center">
+    <input type="submit" class="button" style="border:none;" value="Post" /> </div>
+
+    {% if perror %}
+        <p class="error"><strong></strong> {{perror}}</p>
+    {% endif %}
+
+
+</form>
+</center>
+
+<form action="/manage" method="POST">
+<center>
+{% for tags in pending_tags %}
+  <div style="font-family: Helvetica; font-size:14px; color:#3c3c3d"> 
+
+                  <p>{{tags.username_tagger}} tagged you on content ID {{tags.id}} at: {{tags.timest}}</p> </div>
+                  <select class="input" name="answer" style="color:grey">
+                      <option value="yes" required>approve</option>
+                      <option value="no" required>disapprove</option>
+                   </select>
+
+                   <input type="hidden" name=id value={{tags.id}} />
+                   <input type="hidden" name=username_tagger value={{tags.username_tagger}} />
+
+
+                   <input type="submit" class="button" style="border:none;" value="Submit" />
+
+
+{% endfor %}
+
+                </form>
+</center>
+
+</article>
+<article>
+
+
+<style type="text/css">
+	table, th, td{
+		border: none;
+        padding: 15px 100px;
+
+	}
+</style>
+
+  <th><div style="font: Helvetica; font-size:18px"><center><b>Posts</b></center></th></div>
+
+    {% for line in posts %}
+       <article style="background-color: #fcfcfc; font-family: Helvetica; color:#3c3c3d">
+	   <tr>
+         <div style ="line-height: 90%;">
+
+          
+          <td><small><small>{{line.timest}}</small></small></td><br></br>
+          <td><b>{{line.username}}: </b></td> <td>{{line.content_name}}</td>
+
+          {% if line.file_path %}
+          <td><a href={{line.file_path}}>link</a>
+          </td>
+          {% endif %}
+
+        </div>
+          <br></br>
+              <td><center><div style="font: Helvetica; font-size:14px"><b>Comments</b></div></center></td><br></br>
+
+          {% for comment in commentlist %}
+          {% if line.id == comment.id %}
+          <div style ="line-height: 70%;">
+                  <td><small><b>{{comment.username}}: </b></small></td>
+                  <td><small>{{comment.comment_text}}</small></td><br></br>
+                  <td><small><small><small>{{comment.timest}}</small></small></small></td><br></br>
+                  </div>
+          {% endif %}
+          {% endfor %}
+
+
+        <form action="/comment" method="POST">
+          <input style="font-size: 11px" type="text" class="input" name ="comment" placeholder="make a comment.." />
+          <input type="submit" style="border:none; font-size: 12px;" value="Comment" />
+          <input type="hidden" name = "cID" value="{{line.id}}" />
+
+      </form>
+      <br></br>
+         <td><center><div style="font: Helvetica; font-size:14px"><b>Tags</b></div></center></td>
+         <br></br>
+         {% for tag in taglist %}
+         {% if line.id == tag.id and tag.status == 1 %}
+         
+         <div style ="font-family: Helvetica; font-size: 14px; color:#4286f4;">
+         <td><small>@{{tag.username_taggee}}</small></td>
+         </div>
+         {% if tagerror %}
+        <p class="error"><strong></strong> {{tagerror}}</p>
+         {% endif %}
+         
+
+
+         {% endif %}
+         {% endfor %}
+       <form action="/tag" method="POST">
+          <input style="font-size: 11px" type="text" class="input" name ="taggee" placeholder="tag someone.." />
+          <input type="submit" style="border:none; font-size: 12px;" value="Tag" />
+          <input type="hidden" name = "cID" value="{{line.id}}" />
+      </form>
+      
+      </tr>
+    </article>
+    {% endfor %}
+
+<footer>
+<a style="color:white" href="/logout">Logout</a>
+</footer>
+</style>
+</div>
+</body>
+</html>

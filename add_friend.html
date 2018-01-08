@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head> 
+
+<title> Add Friend</title>
+
+
+<style>
+.button {
+    background-color: #ffcc00;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 10px 130px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 35px 180px;
+    cursor: pointer;
+    font: 13px Verdana;}
+
+.buttonHolder {
+    text-align: center;}
+
+.login {
+    background-color: #fcfcfc;
+    border: none;
+    color: black;
+    padding: 5px 32px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 5px 190px;
+    cursor: pointer;
+    font: 13px Verdana;}
+.back {
+    background-color: #fcfcfc;
+    border-radius: 5px;
+    border: none;
+    color: black;
+    padding: 5px 32px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 35px 180px;
+    cursor: pointer;
+    font: 13px Verdana;}
+</style>
+</head>
+
+<center>
+<div style="font-family: Helvetica; font-size:14px; color:#3c3c3d">
+<h1> Add a friend</h1>
+</div>
+<p>...to an existing friend group</p>
+</center>
+<body>
+<div class="buttonHolder">
+<form action="/addFriendAuth" method="POST">
+    <input class ="login" type="text" name = "fUsername" placeholder="username" required/> </br>
+    <input class="login" type="text" name = "friendGroup" placeholder="friendGroup" required/></br>
+    <input class="button" type="submit" value = Add />
+    {% if error %}
+         <div style="font: Helvetica; color: red; font-size:16px"><strong></strong><b> {{error}}</b></p></div>
+    {% endif %}
+</form>
+</div>
+</body>
+
+<body>
+
+<form action="/search" method="POST">
+  <inp type="text" name="search" placeholder="Search..">
+</form>
+
+<center><a class="back" href="/home">Back</a></center>
+
+</body>
+</html>
+
+

@@ -33,7 +33,7 @@ def loginAuth():
      cursor = conn.cursor() #cursor used to send queries
      query = 'SELECT * FROM person WHERE username = %s and password = %s'
      cursor.execute(query, (username, h))
-     data = cursor.fetchone()
+     data = cursor.fetchone() 
      cursor.close()
      error = None
      if(data):

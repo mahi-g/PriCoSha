@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head> 
+
+<title> Login </title>
+
+<style>
+
+.button {
+    background-color: #FF9933;
+    border-radius: 8px;
+    color: white;
+    padding: 10px 130px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 35px 180px;
+    cursor: pointer;
+    border:none;
+    font: 13px Verdana;}
+
+.buttonHolder {
+    text-align: center;}
+
+.login {
+    background-color: #fcfcfc;
+    border: none;
+    color: black;
+    padding: 5px 32px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 5px 190px;
+    cursor: pointer;
+    font: 13px Verdana;}
+.back {
+    background-color: #fcfcfc;
+    border-radius: 5px;
+    border: none;
+    color: black;
+    padding: 5px 32px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 35px 180px;
+    cursor: pointer;
+    font: 13px Verdana;}
+
+</style>
+</head>
+
+<body>
+<h1 style="font-family:Trebuchet MS"> <center>PriCoSha</center> </h1>
+
+<div class="buttonHolder">
+<form action="/loginAuth" method="POST">
+	<input class = "login" type="text" name = "username" placeholder="username" required/> </br>
+	<input class="login" type="password" name = "password" placeholder="password" required/></br>
+	<input class="button" type="submit" value = Login />
+	{% if error %}
+		<p class="error"><strong>Error:</strong> {{error}}</p>
+	{% endif %}
+</form>
+<a class="back" href="/">Back</a>
+</div>
+</body>
+</html>
+
+
